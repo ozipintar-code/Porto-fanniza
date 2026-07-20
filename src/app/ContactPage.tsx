@@ -1,0 +1,128 @@
+import { Mail, MessageCircle, Linkedin, Download, Instagram } from "lucide-react";
+import SiteNav from "./components/SiteNav";
+import { CREAM, DARK, ACCENT, DISPLAY, BODY } from "./theme";
+
+interface ContactPageProps {
+  onLogoClick: () => void;
+  onProjectsClick: () => void;
+  onAboutClick?: () => void;
+  onInteriorClick?: () => void;
+  onVisualMerchandisingClick?: () => void;
+  onContactClick?: () => void;
+}
+
+export default function ContactPage(props: ContactPageProps) {
+  return (
+    <div style={{ backgroundColor: CREAM, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <SiteNav {...props} variant="sticky" />
+      
+      <main style={{ 
+        flex: 1, 
+        display: "flex", 
+        flexDirection: "row", 
+        flexWrap: "wrap",
+        alignItems: "center", 
+        padding: "4rem 2rem",
+        maxWidth: "1400px",
+        margin: "0 auto",
+        width: "100%"
+      }}>
+        
+        {/* Left Side: Big Typography */}
+        <div style={{ flex: "1 1 500px", padding: "2rem" }}>
+          <h1 style={{ 
+            fontFamily: DISPLAY, 
+            fontSize: "clamp(4rem, 8vw, 7rem)", 
+            fontWeight: 900, 
+            color: DARK, 
+            lineHeight: 0.9,
+            letterSpacing: "-0.04em",
+            marginBottom: "2rem"
+          }}>
+            LET'S<br/>CREATE<br/>TOGETHER.
+          </h1>
+          <p style={{ fontFamily: BODY, fontSize: "1.1rem", color: DARK, opacity: 0.7, maxWidth: "400px", lineHeight: 1.6, marginBottom: "2.5rem" }}>
+            Saat ini saya terbuka untuk proyek *freelance* maupun peluang penuh waktu. Jangan ragu untuk menyapa dan berdiskusi mengenai proyek Anda selanjutnya!
+          </p>
+          <a
+            href="/CV-Fannisa-Azzuri-Rienhardt.pdf"
+            download
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "0.6rem",
+              border: `1px solid rgba(17,17,17,0.2)`, color: DARK, textDecoration: "none",
+              borderRadius: "99px", padding: "0.65rem 1.4rem",
+              fontFamily: BODY, fontSize: "0.85rem", fontWeight: 500, letterSpacing: "0.03em",
+              transition: "background-color 0.2s, border-color 0.2s"
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(17,17,17,0.04)"; e.currentTarget.style.borderColor = DARK; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.borderColor = "rgba(17,17,17,0.2)"; }}
+          >
+            <Download size={15} /> Unduh CV (PDF)
+          </a>
+        </div>
+
+        {/* Right Side: Links */}
+        <div style={{ flex: "1 1 400px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          
+          <a href="https://wa.me/+6285171672687" target="_blank" rel="noopener noreferrer" style={{
+            display: "flex", alignItems: "center", gap: "1.5rem", padding: "2rem",
+            backgroundColor: DARK, color: CREAM, textDecoration: "none", borderRadius: "24px",
+            transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+          }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-4px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+            <div style={{ backgroundColor: ACCENT, padding: "1rem", borderRadius: "50%" }}>
+              <MessageCircle size={32} color={CREAM} />
+            </div>
+            <div>
+              <div style={{ fontFamily: BODY, fontSize: "0.9rem", opacity: 0.7, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.3rem" }}>WhatsApp</div>
+              <div style={{ fontFamily: DISPLAY, fontSize: "1.5rem", fontWeight: 700 }}>+62 851 7167 2687</div>
+            </div>
+          </a>
+
+          <a href="mailto:fannisazzuri@gmail.com" style={{
+            display: "flex", alignItems: "center", gap: "1.5rem", padding: "2rem",
+            backgroundColor: "rgba(0,0,0,0.03)", color: DARK, textDecoration: "none", borderRadius: "24px",
+            transition: "background-color 0.3s ease",
+          }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.06)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.03)"}>
+            <div style={{ backgroundColor: "rgba(0,0,0,0.06)", padding: "1rem", borderRadius: "50%" }}>
+              <Mail size={32} color={DARK} />
+            </div>
+            <div>
+              <div style={{ fontFamily: BODY, fontSize: "0.9rem", opacity: 0.7, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.3rem" }}>Email</div>
+              <div style={{ fontFamily: DISPLAY, fontSize: "1.3rem", fontWeight: 700 }}>fannisazzuri@gmail.com</div>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/fannisazzuri/" target="_blank" rel="noopener noreferrer" style={{
+            display: "flex", alignItems: "center", gap: "1.5rem", padding: "2rem",
+            backgroundColor: "rgba(0,0,0,0.03)", color: DARK, textDecoration: "none", borderRadius: "24px",
+            transition: "background-color 0.3s ease",
+          }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.06)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.03)"}>
+            <div style={{ backgroundColor: "rgba(0,0,0,0.06)", padding: "1rem", borderRadius: "50%" }}>
+              <Linkedin size={32} color={DARK} />
+            </div>
+            <div>
+              <div style={{ fontFamily: BODY, fontSize: "0.9rem", opacity: 0.7, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.3rem" }}>LinkedIn</div>
+              <div style={{ fontFamily: DISPLAY, fontSize: "1.5rem", fontWeight: 700 }}>Fannisa Azzuri</div>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/deui.space/" target="_blank" rel="noopener noreferrer" style={{
+            display: "flex", alignItems: "center", gap: "1.5rem", padding: "2rem",
+            backgroundColor: "rgba(0,0,0,0.03)", color: DARK, textDecoration: "none", borderRadius: "24px",
+            transition: "background-color 0.3s ease",
+          }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.06)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.03)"}>
+            <div style={{ backgroundColor: "rgba(0,0,0,0.06)", padding: "1rem", borderRadius: "50%" }}>
+              <Instagram size={32} color={DARK} />
+            </div>
+            <div>
+              <div style={{ fontFamily: BODY, fontSize: "0.9rem", opacity: 0.7, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.3rem" }}>Instagram</div>
+              <div style={{ fontFamily: DISPLAY, fontSize: "1.5rem", fontWeight: 700 }}>@deui.space</div>
+            </div>
+          </a>
+
+        </div>
+
+      </main>
+    </div>
+  );
+}
