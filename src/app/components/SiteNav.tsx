@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, ArrowUpRight, Menu, X, Droplet, Moon } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Menu, X, Droplet, Moon, Sparkles } from "lucide-react";
 import { CREAM, DARK, ACCENT, DISPLAY, BODY } from "../theme";
 import { useLanguage } from "../i18n";
 import { STRINGS } from "../strings";
@@ -30,31 +30,53 @@ const BREAKPOINT = 900;
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
-  const isLight = theme === "light";
+  
+  let label = "NOIR";
+  let icon = <Moon size={14} color="var(--bg-1)" />;
+  let bgOuter = "var(--bg-2)";
+  let borderOuter = "1.5px solid var(--accent)";
+  let textOuter = "var(--bg-1)";
+  let bgInner = "transparent";
+
+  if (theme === "light") {
+    label = "BLUSH";
+    icon = <Droplet size={14} color="#1A1A1A" />;
+    bgOuter = "#E4E1DA";
+    borderOuter = "1.5px solid #1A1A1A";
+    textOuter = "#1A1A1A";
+    bgInner = "#F1F0EC";
+  } else if (theme === "elegant") {
+    label = "ELEGANT";
+    icon = <Sparkles size={14} color="#FFFFFF" />;
+    bgOuter = "#FAF5F2";
+    borderOuter = "1.5px solid #D97706";
+    textOuter = "#0F172A";
+    bgInner = "#D97706";
+  }
   
   return (
     <button
       onClick={toggleTheme}
       style={{
         display: "flex", alignItems: "center", gap: "0.6rem",
-        backgroundColor: isLight ? "#E4E1DA" : "var(--bg-2)",
-        border: `1.5px solid ${isLight ? "#1A1A1A" : "var(--accent)"}`,
+        backgroundColor: bgOuter,
+        border: borderOuter,
         borderRadius: "999px",
         padding: "0.4rem 1rem 0.4rem 0.4rem",
         cursor: "pointer",
         fontFamily: BODY, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.05em",
-        color: isLight ? "#1A1A1A" : "var(--bg-1)",
+        color: textOuter,
         transition: "all 0.2s"
       }}
     >
       <div style={{
-        backgroundColor: isLight ? "#F1F0EC" : "transparent",
+        backgroundColor: bgInner,
         borderRadius: "50%", padding: "0.3rem",
         display: "flex", alignItems: "center", justifyContent: "center"
       }}>
-        {isLight ? <Droplet size={14} color="#1A1A1A" /> : <Moon size={14} color="var(--bg-1)" />}
+        {icon}
       </div>
-      {isLight ? "BLUSH" : "NOIR"}
+      {label}
     </button>
   );
 }

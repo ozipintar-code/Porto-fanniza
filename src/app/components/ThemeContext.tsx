@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "light";
+type Theme = "dark" | "light" | "elegant";
 
 interface ThemeContextType {
   theme: Theme;
@@ -15,7 +15,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("deui-theme") as Theme;
-    if (saved === "light" || saved === "dark") {
+    if (saved === "light" || saved === "dark" || saved === "elegant") {
       setThemeState(saved);
       document.documentElement.setAttribute("data-theme", saved);
     } else {
@@ -30,7 +30,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(theme === "dark" ? "light" : theme === "light" ? "elegant" : "dark");
   };
 
   return (

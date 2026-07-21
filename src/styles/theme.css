@@ -16,6 +16,14 @@
   --accent: #A34B34;    /* was #C17B54 (terracotta) — deepened to rust so it has enough value contrast against the blush to actually pop */
 }
 
+:root[data-theme="elegant"] {
+  --bg-1: #FAF5F2;      /* warm cream / interior grey */
+  --bg-2: #0F172A;      /* slate dark for contrast sections */
+  --text: #0F172A;      /* slate dark */
+  --text-on-2: #E6C9A8; /* champagne gold on slate */
+  --accent: #D97706;    /* gold / amber */
+}
+
 body, section, nav, div {
   transition-property: background-color, color, border-color;
   transition-duration: 200ms;
