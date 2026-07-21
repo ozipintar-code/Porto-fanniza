@@ -81,7 +81,16 @@ export function useRouter() {
   const [route, setRouteState] = useState<Route>(() => parseLocation());
 
   useEffect(() => {
-    const onPopState = () => setRouteState(parseLocation());
+    const onPopState = () => {
+      const next = parseLocation();
+      if (!(document as any).startViewTransition) {
+        setRouteState(next);
+      } else {
+        (document as any).startViewTransition(() => {
+          setRouteState(next);
+        });
+      }
+    };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
@@ -92,9 +101,16 @@ export function useRouter() {
       if (replace) window.history.replaceState(null, "", path);
       else window.history.pushState(null, "", path);
     }
-    setRouteState(next);
-    // Land at the top of the new page instead of keeping the old scroll offset.
-    document.getElementById("page-scroll-root")?.scrollTo(0, 0);
+    
+    if (!(document as any).startViewTransition) {
+      setRouteState(next);
+      document.getElementById("page-scroll-root")?.scrollTo(0, 0);
+    } else {
+      (document as any).startViewTransition(() => {
+        setRouteState(next);
+        document.getElementById("page-scroll-root")?.scrollTo(0, 0);
+      });
+    }
   }, []);
 
   return { route, navigate };

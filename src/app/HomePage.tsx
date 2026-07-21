@@ -4,6 +4,7 @@ import { CREAM, DARK, DARK2, ACCENT, TEXT_ON_2, DISPLAY, BODY } from "./theme";
 import { PROJECTS } from "./data/projects";
 import { useLanguage } from "./i18n";
 import { STRINGS } from "./strings";
+import SEO from "./components/SEO";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
 import PillButton from "./components/PillButton";
@@ -49,6 +50,7 @@ export default function HomePage({
 
   return (
     <div id="page-scroll-root" style={{ fontFamily: BODY, backgroundColor: CREAM, color: DARK, overflowX: "hidden", height: "100vh", overflowY: "auto" }}>
+      <SEO />
       <style>{`
         @media (max-width: 760px) {
           .hp-hero-grid { grid-template-columns: 1fr !important; }
@@ -59,10 +61,13 @@ export default function HomePage({
           .hp-table-row { grid-template-columns: 1fr 70px !important; }
           .hp-table-row > *:nth-child(3) { display: none; }
           .hp-cta-grid { grid-template-columns: 1fr !important; }
-          .hp-cta-left-img, .hp-cta-right-img { width: 60vw !important; height: 40vh !important; }
-          .hp-cta-left-text { top: 15% !important; width: 60vw !important; font-size: 0.7rem !important; }
-          .hp-cta-right-text { bottom: 15% !important; width: 60vw !important; font-size: 0.7rem !important; }
-          .hp-cta-btn { margin-top: 20vw !important; }
+          .hp-cta-left-img, .hp-cta-right-img { width: 100vw !important; height: 50vh !important; opacity: 0.15 !important; }
+          .hp-cta-left-text { top: 12% !important; left: 5% !important; width: 90vw !important; text-align: center !important; font-size: 0.9rem !important; font-weight: 600 !important; }
+          .hp-cta-right-text { bottom: 12% !important; right: 5% !important; width: 90vw !important; text-align: center !important; font-size: 0.9rem !important; font-weight: 600 !important; }
+          .hp-cta-btn { margin-top: 35vw !important; }
+          .hp-carousel-side { display: none !important; }
+          .hp-carousel-main { flex: 1 1 100% !important; }
+          .hp-carousel-main img { height: 60vh !important; }
         }
       `}</style>
 
@@ -112,7 +117,7 @@ export default function HomePage({
               margin: 0,
               whiteSpace: "nowrap"
             }}>
-              Selected Projects
+              {t.heroTitle}
             </h1>
           </div>
         </div>
@@ -135,7 +140,7 @@ export default function HomePage({
             color: DARK,
             margin: 0
           }}>
-            A passionate Interior & Visual Merchandising designer dedicated to crafting meaningful spaces.
+            {t.heroSubtitle}
           </h2>
         </div>
       </section>
@@ -153,9 +158,9 @@ export default function HomePage({
           lineHeight: 0.9, letterSpacing: "-0.04em",
           marginBottom: "4rem"
         }}>
-          <div>we are</div>
+          <div>{t.weAreTitle[0]}</div>
           <div style={{ flex: 1, borderTop: `4px solid ${ACCENT}`, margin: "0 2rem", opacity: 0.8, maxWidth: "60px" }}></div>
-          <div>designers</div>
+          <div>{t.weAreTitle[1]}</div>
         </div>
 
         {/* 2-Column Layout */}
@@ -186,13 +191,13 @@ export default function HomePage({
               fontFamily: BODY, fontSize: "1rem", lineHeight: 1.6, opacity: 0.8,
               marginBottom: "1.5rem", maxWidth: "600px"
             }}>
-              Bridging architecture and human experience, Deui.space crafts environments that balance aesthetic precision with tactile warmth. From residential sanctuaries to retail installations, every project begins with one question: how should this space make you feel?
+              {t.aboutBody1}
             </p>
             <p style={{
               fontFamily: BODY, fontSize: "1rem", lineHeight: 1.6, opacity: 0.8,
               marginBottom: "3rem", maxWidth: "600px"
             }}>
-              With a dual practice spanning interior design and visual merchandising, Fannisa brings a retailer's eye for narrative to private spaces — and a home's intimacy to commercial interiors. The result: environments that endure beyond trend.
+              {t.aboutBody2}
             </p>
 
             <div style={{ marginBottom: "4rem" }}>
@@ -206,13 +211,13 @@ export default function HomePage({
                 <div style={{ backgroundColor: ACCENT, borderRadius: "50%", width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <ArrowRight size={14} color="var(--bg-1)" />
                 </div>
-                Discover More
+                {t.discoverMore}
               </button>
             </div>
 
             <div>
               <div style={{ fontFamily: BODY, fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.5, marginBottom: "1rem" }}>
-                Selected Clients
+                {t.selectedClients}
               </div>
               <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                 {["PlayWorks", "Urban Parfume", "Pakuwon Group"].map(client => (
@@ -257,7 +262,7 @@ export default function HomePage({
           {([-2, -1] as const).map((offset) => {
             const idx = getIdx(offset);
             return (
-              <div key={idx} onClick={() => setCarouselIdx(idx)}
+              <div key={idx} className="hp-carousel-side" onClick={() => setCarouselIdx(idx)}
                 style={{ flex: 1, cursor: "pointer", opacity: 0.28, transition: "opacity 0.3s" }}
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.55")}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.28")}
@@ -269,6 +274,7 @@ export default function HomePage({
           })}
 
           <div
+            className="hp-carousel-main"
             style={{ flex: "0 0 38%", transition: "flex 0.3s", cursor: "pointer", position: "relative" }}
             onClick={() => onSelectProject(PORTFOLIO[carouselIdx].slug)}
             title={`View ${PORTFOLIO[carouselIdx].name}`}
@@ -291,7 +297,7 @@ export default function HomePage({
           {([1, 2] as const).map((offset) => {
             const idx = getIdx(offset);
             return (
-              <div key={idx} onClick={() => setCarouselIdx(idx)}
+              <div key={idx} className="hp-carousel-side" onClick={() => setCarouselIdx(idx)}
                 style={{ flex: 1, cursor: "pointer", opacity: 0.28, transition: "opacity 0.3s" }}
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.55")}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.28")}

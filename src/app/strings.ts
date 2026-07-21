@@ -9,7 +9,13 @@ export const STRINGS = {
     nav: { projects: "Projects", about: "About", interior: "Interior", visualMerch: "Visual Merchandising", contact: "Contact", talkWithUs: "Talk With Us" },
     home: {
       kicker: "Interior Design & Visual Merchandising Studio — Yogyakarta",
+      heroTitle: "Selected Projects",
+      heroSubtitle: "A passionate Interior & Visual Merchandising designer dedicated to crafting meaningful spaces.",
       weAreTitle: ["we are", "designers"] as [string, string],
+      aboutBody1: "Bridging architecture and human experience, Deui.space crafts environments that balance aesthetic precision with tactile warmth. From residential sanctuaries to retail installations, every project begins with one question: how should this space make you feel?",
+      aboutBody2: "With a dual practice spanning interior design and visual merchandising, Fannisa brings a retailer's eye for narrative to private spaces — and a home's intimacy to commercial interiors. The result: environments that endure beyond trend.",
+      discoverMore: "Discover More",
+      selectedClients: "Selected Clients",
       weAreBody:
         "Deui.space is an interior design and visual merchandising studio based in Yogyakarta, working across residential, commercial, and retail spaces throughout Indonesia. We believe good design is felt before it's noticed — in the weight of a material, the angle of light, the ease of moving from one room to the next.",
       portfolioLabel: "portfolio",
@@ -25,6 +31,11 @@ export const STRINGS = {
       exploreMore: "Explore More",
       tableProject: "Project", tableCategory: "Category", tableYear: "Year",
       hoverPreview: "Hover to preview",
+    },
+    contact: {
+      title: ["LET'S", "CREATE", "TOGETHER."] as [string, string, string],
+      description: "I am currently open to freelance projects as well as full-time opportunities. Don't hesitate to say hello and discuss your next project!",
+      downloadCv: "Download CV (PDF)",
     },
     projects: {
       title: "PROJECTS",
@@ -95,15 +106,21 @@ export const STRINGS = {
     },
   },
   id: {
-    nav: { projects: "Proyek", about: "Tentang", interior: "Interior", visualMerch: "Visual Merchandising", contact: "Kontak", talkWithUs: "Hubungi Kami" },
+    nav: { projects: "Projects", about: "About", interior: "Interior", visualMerch: "Visual Merchandising", contact: "Kontak", talkWithUs: "Hubungi Kami" },
     home: {
       kicker: "Studio Desain Interior & Visual Merchandising — Yogyakarta",
-      weAreTitle: ["kami", "desainer"] as [string, string],
+      heroTitle: "Selected Projects",
+      heroSubtitle: "Desainer Interior & Visual Merchandising yang berdedikasi merancang ruang-ruang bermakna.",
+      weAreTitle: ["we are", "designers"] as [string, string],
+      aboutBody1: "Menjembatani arsitektur dan pengalaman manusia, Deui.space merancang lingkungan yang menyeimbangkan presisi estetika dengan kehangatan taktil. Dari suaka hunian hingga instalasi ritel, setiap proyek dimulai dengan satu pertanyaan: bagaimana seharusnya ruang ini membuat Anda merasa?",
+      aboutBody2: "Dengan praktik ganda yang mencakup desain interior dan visual merchandising, Fannisa membawa ketelitian naratif ritel ke ruang privat — dan keintiman rumah tangga ke interior komersial. Hasilnya: lingkungan yang bertahan melampaui tren.",
+      discoverMore: "Jelajahi Lebih Lanjut",
+      selectedClients: "Klien Terpilih",
       weAreBody:
         "Deui.space adalah studio desain interior dan visual merchandising yang berbasis di Yogyakarta, mengerjakan ruang residensial, komersial, dan retail di seluruh Indonesia. Kami percaya desain yang baik terasa sebelum disadari — pada bobot sebuah material, sudut jatuhnya cahaya, kemudahan berpindah dari satu ruang ke ruang lain.",
-      portfolioLabel: "portofolio",
+      portfolioLabel: "portfolio",
       viewCaseStudy: "Lihat Studi Kasus",
-      ourProjects: ["proyek", "kami"] as [string, string],
+      ourProjects: ["our", "projects"] as [string, string],
       viewAll: "Lihat Semua Proyek",
       ctaKicker: "Konsultasi Personal",
       ctaTitle: ["hubungi", "kami"] as [string, string],
@@ -115,8 +132,13 @@ export const STRINGS = {
       tableProject: "Proyek", tableCategory: "Kategori", tableYear: "Tahun",
       hoverPreview: "Arahkan kursor untuk pratinjau",
     },
+    contact: {
+      title: ["LET'S", "CREATE", "TOGETHER."] as [string, string, string],
+      description: "Saat ini saya terbuka untuk proyek freelance maupun peluang penuh waktu. Jangan ragu untuk menyapa dan berdiskusi mengenai proyek Anda selanjutnya!",
+      downloadCv: "Unduh CV (PDF)",
+    },
     projects: {
-      title: "PROYEK",
+      title: "PROJECTS",
       subtitle: (n: number) => `Kumpulan ruang yang dibentuk oleh kejujuran material dan detail yang tenang — ${n} proyek sejak 2024, mencakup pekerjaan residensial, komersial, dan retail.`,
       total: "Total",
       projectCount: (n: number) => `${n} proyek`,

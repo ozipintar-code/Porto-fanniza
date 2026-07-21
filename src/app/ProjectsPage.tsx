@@ -6,6 +6,7 @@ import { useLanguage } from "./i18n";
 import { STRINGS } from "./strings";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
+import SEO from "./components/SEO";
 import FilterPill from "./components/FilterPill";
 import PillButton from "./components/PillButton";
 
@@ -126,7 +127,8 @@ export default function ProjectsPage({
   const viewLabel = t.viewProject;
 
   return (
-    <div id="page-scroll-root" style={{ fontFamily: BODY, backgroundColor: CREAM, color: DARK, overflowX: "hidden", height: "100vh", overflowY: "auto" }}>
+    <div id="page-scroll-root" style={{ fontFamily: BODY, backgroundColor: CREAM, color: DARK, minHeight: "100vh", overflowX: "hidden", display: "flex", flexDirection: "column" }}>
+      <SEO title="Projects — Fannisa Azzuri" />
 
       {/* ══════════════════════════════════════════
           §1 · NAV
@@ -222,51 +224,36 @@ export default function ProjectsPage({
           }}>
             {t.noProjectsFound}
           </div>
-        ) : isFullGrid ? (
-          // Editorial asymmetric grid — used only when showing all 10 projects
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "2px" }}>
-            <div style={{ gridColumn: "span 12", height: "62vh" }}>
-              <ArchiveCard slug={filtered[0].slug} name={filtered[0].name} categoryLabel={catLabel[filtered[0].category]} year={filtered[0].year} cardImage={filtered[0].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 7", height: "52vh" }}>
-              <ArchiveCard slug={filtered[1].slug} name={filtered[1].name} categoryLabel={catLabel[filtered[1].category]} year={filtered[1].year} cardImage={filtered[1].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 5", height: "52vh" }}>
-              <ArchiveCard slug={filtered[2].slug} name={filtered[2].name} categoryLabel={catLabel[filtered[2].category]} year={filtered[2].year} cardImage={filtered[2].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 4", height: "56vh" }}>
-              <ArchiveCard slug={filtered[3].slug} name={filtered[3].name} categoryLabel={catLabel[filtered[3].category]} year={filtered[3].year} cardImage={filtered[3].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 4", height: "56vh" }}>
-              <ArchiveCard slug={filtered[4].slug} name={filtered[4].name} categoryLabel={catLabel[filtered[4].category]} year={filtered[4].year} cardImage={filtered[4].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 4", height: "56vh" }}>
-              <ArchiveCard slug={filtered[5].slug} name={filtered[5].name} categoryLabel={catLabel[filtered[5].category]} year={filtered[5].year} cardImage={filtered[5].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 5", height: "52vh" }}>
-              <ArchiveCard slug={filtered[6].slug} name={filtered[6].name} categoryLabel={catLabel[filtered[6].category]} year={filtered[6].year} cardImage={filtered[6].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 7", height: "52vh" }}>
-              <ArchiveCard slug={filtered[7].slug} name={filtered[7].name} categoryLabel={catLabel[filtered[7].category]} year={filtered[7].year} cardImage={filtered[7].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 8", height: "52vh" }}>
-              <ArchiveCard slug={filtered[8].slug} name={filtered[8].name} categoryLabel={catLabel[filtered[8].category]} year={filtered[8].year} cardImage={filtered[8].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 4", height: "52vh" }}>
-              <ArchiveCard slug={filtered[9].slug} name={filtered[9].name} categoryLabel={catLabel[filtered[9].category]} year={filtered[9].year} cardImage={filtered[9].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-            <div style={{ gridColumn: "span 12", height: "62vh" }}>
-              <ArchiveCard slug={filtered[10].slug} name={filtered[10].name} categoryLabel={catLabel[filtered[10].category]} year={filtered[10].year} cardImage={filtered[10].cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-            </div>
-          </div>
         ) : (
-          // Standard filtered grid
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "2px" }}>
-            {filtered.map((p) => (
-              <div key={p.id} style={{ height: "50vh" }}>
-                <ArchiveCard slug={p.slug} name={p.name} categoryLabel={catLabel[p.category]} year={p.year} cardImage={p.cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-              </div>
-            ))}
+          <div className="masonry-grid" style={{ padding: "0 1rem" }}>
+            <style>{`
+              .masonry-grid {
+                column-count: 3;
+                column-gap: 2px;
+                padding: 2px;
+              }
+              .masonry-item {
+                break-inside: avoid;
+                margin-bottom: 2px;
+              }
+              @media (max-width: 1024px) {
+                .masonry-grid { column-count: 2; }
+              }
+              @media (max-width: 640px) {
+                .masonry-grid { column-count: 1; }
+              }
+            `}</style>
+            
+            {filtered.map((p, index) => {
+              // Array of varying heights to simulate an organic masonry feel
+              const heights = ["62vh", "52vh", "56vh", "48vh", "65vh", "55vh"];
+              const h = heights[index % heights.length];
+              return (
+                <div key={p.id} className="masonry-item" style={{ height: h }}>
+                  <ArchiveCard slug={p.slug} name={p.name} categoryLabel={catLabel[p.category]} year={p.year} cardImage={p.cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
+                </div>
+              );
+            })}
           </div>
         )}
 

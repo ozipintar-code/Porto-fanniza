@@ -6,6 +6,7 @@ import { useLanguage } from "./i18n";
 import { STRINGS } from "./strings";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
+import SEO from "./components/SEO";
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 function GalleryImage({
@@ -52,18 +53,19 @@ function GalleryImage({
 
 function SpecRow({ label, value }: { label: string; value: string }) {
   return (
-    <tr style={{ borderBottom: "1px solid color-mix(in srgb, var(--text) 8%, transparent)" }}>
+    <tr style={{ borderBottom: "1px solid color-mix(in srgb, var(--text) 15%, transparent)" }}>
       <td style={{
-        fontFamily: BODY, fontSize: "0.68rem", letterSpacing: "0.12em",
-        textTransform: "uppercase", opacity: 0.35,
-        padding: "1.05rem 1.5rem 1.05rem 0", width: "44%", verticalAlign: "top",
-        paddingTop: "1.15rem",
+        fontFamily: BODY, fontSize: "0.65rem", letterSpacing: "0.15em",
+        textTransform: "uppercase", opacity: 0.45,
+        padding: "1.25rem 1.5rem 1.25rem 0", width: "40%", verticalAlign: "top",
+        paddingTop: "1.4rem",
       }}>
         {label}
       </td>
       <td style={{
-        fontFamily: BODY, fontSize: "0.9rem", fontWeight: 500,
-        padding: "1.05rem 0", lineHeight: 1.6,
+        fontFamily: DISPLAY, fontSize: "1rem", fontWeight: 700,
+        padding: "1.25rem 0", lineHeight: 1.5,
+        color: "color-mix(in srgb, var(--text) 90%, transparent)",
       }}>
         {value}
       </td>
@@ -152,6 +154,12 @@ export default function ProjectPage({
       id="page-scroll-root"
       style={{ fontFamily: BODY, backgroundColor: CREAM, color: DARK, overflowX: "hidden", height: "100vh", overflowY: "auto" }}
     >
+      <SEO 
+        title={`${project.name} — Fannisa Azzuri`}
+        description={project.description}
+        image={project.heroImage}
+        url={`https://porto-fanniza.vercel.app/project/${project.slug}`} // Assuming slug exists and domain
+      />
       <style>{`
         @media (max-width: 760px) {
           .pp-meta-bar { flex-wrap: wrap !important; }
@@ -172,6 +180,7 @@ export default function ProjectPage({
       ──────────────────────────────────────── */}
       {lightbox && (
         <div
+          className="lb-backdrop"
           onClick={() => setLightbox(null)}
           style={{
             position: "fixed", inset: 0, zIndex: 200,
@@ -212,9 +221,11 @@ export default function ProjectPage({
           </button>
 
           <img
+            key={lightbox}
+            className="lb-content"
             src={lightbox} alt={gallery[lbIdx]?.alt ?? "Gallery image"}
             onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain", display: "block" }}
+            style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain", display: "block", boxShadow: "0 20px 50px rgba(0,0,0,0.5)" }}
           />
 
           <button onClick={lbNext} style={{
@@ -401,18 +412,34 @@ export default function ProjectPage({
           <GalleryImage src={gallery[0].src} alt={gallery[0].alt} height="58vh" onExpand={() => openLightbox(0)} expandLabel={t.expand} />
         </div>
 
-        {/* Remaining shots: responsive grid that adapts to however many real
-            photos this project has (as few as 1, as many as 12) instead of
-            assuming a fixed count. */}
+        {/* Remaining shots: Masonry exhibition gallery layout */}
         {gallery.length > 1 && (
-          <div className="pp-gallery-grid" style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "1.25rem",
-          }}>
-            {gallery.slice(1).map((g, i) => (
-              <GalleryImage key={i + 1} src={g.src} alt={g.alt} height="38vh" onExpand={() => openLightbox(i + 1)} expandLabel={t.expand} />
-            ))}
+          <div className="pp-gallery-grid">
+            <style>{`
+              .pp-gallery-grid {
+                column-count: 3;
+                column-gap: 1.25rem;
+              }
+              .pp-gallery-item {
+                break-inside: avoid;
+                margin-bottom: 1.25rem;
+              }
+              @media (max-width: 1024px) {
+                .pp-gallery-grid { column-count: 2; }
+              }
+              @media (max-width: 640px) {
+                .pp-gallery-grid { column-count: 1; }
+              }
+            `}</style>
+            {gallery.slice(1).map((g, i) => {
+              const heights = ["45vh", "65vh", "50vh", "75vh", "55vh", "40vh"];
+              const h = heights[i % heights.length];
+              return (
+                <div key={i + 1} className="pp-gallery-item">
+                  <GalleryImage src={g.src} alt={g.alt} height={h} onExpand={() => openLightbox(i + 1)} expandLabel={t.expand} />
+                </div>
+              );
+            })}
           </div>
         )}
 

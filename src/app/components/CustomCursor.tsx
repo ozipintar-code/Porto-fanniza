@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { ACCENT } from "../theme";
+
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isActive, setIsActive] = useState(false);
@@ -83,17 +85,17 @@ export default function CustomCursor() {
           position: "fixed",
           top: 0,
           left: 0,
-          width: isActive ? "44px" : "14px",
-          height: isActive ? "44px" : "14px",
-          marginLeft: isActive ? "-22px" : "-7px",
-          marginTop: isActive ? "-22px" : "-7px",
+          width: isActive ? "52px" : "12px",
+          height: isActive ? "52px" : "12px",
+          marginLeft: isActive ? "-26px" : "-6px",
+          marginTop: isActive ? "-26px" : "-6px",
           borderRadius: "50%",
-          backgroundColor: "#fff",
+          backgroundColor: isActive ? "transparent" : ACCENT,
+          border: isActive ? `1.5px solid ${ACCENT}` : "none",
           pointerEvents: "none",
           zIndex: 99999,
-          opacity: isHidden ? 0 : 1,
-          transition: "width 0.25s cubic-bezier(0.25, 1, 0.5, 1), height 0.25s cubic-bezier(0.25, 1, 0.5, 1), margin 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease",
-          mixBlendMode: "difference",
+          opacity: isHidden ? 0 : (isActive ? 0.8 : 1),
+          transition: "width 0.35s cubic-bezier(0.19, 1, 0.22, 1), height 0.35s cubic-bezier(0.19, 1, 0.22, 1), margin 0.35s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.2s, border 0.2s, opacity 0.3s ease",
           willChange: "transform, width, height, margin"
         }}
       />

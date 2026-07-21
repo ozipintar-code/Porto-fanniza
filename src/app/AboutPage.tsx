@@ -5,6 +5,7 @@ import { STRINGS } from "./strings";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
 import PillButton from "./components/PillButton";
+import SEO from "./components/SEO";
 
 interface AboutPageProps {
   onSelectProject: (slug: string) => void;
@@ -45,6 +46,7 @@ export default function AboutPage({
 
   return (
     <div id="page-scroll-root" style={{ fontFamily: BODY, backgroundColor: CREAM, color: DARK, overflowX: "hidden", height: "100vh", overflowY: "auto" }}>
+      <SEO title="About — Fannisa Azzuri" />
       <style>{`
         .ap-hero-grid { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: end; }
         .ap-label-grid { display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }

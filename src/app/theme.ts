@@ -9,8 +9,8 @@ export const DARK2 = "var(--bg-2)";
 export const ACCENT = "var(--accent)";
 export const TEXT_ON_2 = "var(--text-on-2)";
 
-export const DISPLAY = "'Big Shoulders Display', sans-serif";
-export const BODY = "'Outfit', sans-serif";
+export const DISPLAY = "'Cinzel', serif";
+export const BODY = "'Josefin Sans', sans-serif";
 
 // Project names vary a lot in length ("Bedroom" vs "PlayWorks Pakuwon Mall"),
 // but several headings across the site use a single fluid viewport-width

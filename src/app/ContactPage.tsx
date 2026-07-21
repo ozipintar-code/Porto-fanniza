@@ -1,6 +1,9 @@
 import { Mail, MessageCircle, Linkedin, Download, Instagram } from "lucide-react";
 import SiteNav from "./components/SiteNav";
 import { CREAM, DARK, ACCENT, DISPLAY, BODY } from "./theme";
+import { useLanguage } from "./i18n";
+import { STRINGS } from "./strings";
+import SEO from "./components/SEO";
 
 interface ContactPageProps {
   onLogoClick: () => void;
@@ -12,8 +15,12 @@ interface ContactPageProps {
 }
 
 export default function ContactPage(props: ContactPageProps) {
+  const { lang } = useLanguage();
+  const t = STRINGS[lang].contact;
+
   return (
     <div style={{ backgroundColor: CREAM, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <SEO title="Contact — Fannisa Azzuri" />
       <SiteNav {...props} variant="sticky" />
       
       <main style={{ 
@@ -39,10 +46,10 @@ export default function ContactPage(props: ContactPageProps) {
             letterSpacing: "-0.04em",
             marginBottom: "2rem"
           }}>
-            LET'S<br/>CREATE<br/>TOGETHER.
+            {t.title[0]}<br/>{t.title[1]}<br/>{t.title[2]}
           </h1>
           <p style={{ fontFamily: BODY, fontSize: "1.1rem", color: DARK, opacity: 0.7, maxWidth: "400px", lineHeight: 1.6, marginBottom: "2.5rem" }}>
-            Saat ini saya terbuka untuk proyek *freelance* maupun peluang penuh waktu. Jangan ragu untuk menyapa dan berdiskusi mengenai proyek Anda selanjutnya!
+            {t.description}
           </p>
           <a
             href="/CV-Fannisa-Azzuri-Rienhardt.pdf"
@@ -57,7 +64,7 @@ export default function ContactPage(props: ContactPageProps) {
             onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = `color-mix(in srgb, ${DARK} 4%, transparent)`; e.currentTarget.style.borderColor = DARK; }}
             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.borderColor = `color-mix(in srgb, ${DARK} 20%, transparent)`; }}
           >
-            <Download size={15} /> Unduh CV (PDF)
+            <Download size={15} /> {t.downloadCv}
           </a>
         </div>
 

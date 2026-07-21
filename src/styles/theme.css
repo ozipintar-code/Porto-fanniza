@@ -210,3 +210,48 @@ body, section, nav, div {
     line-height: 1.5;
   }
 }
+
+/* Custom View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; filter: blur(0px); transform: scale(1); }
+  to { opacity: 0; filter: blur(4px); transform: scale(0.98); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; filter: blur(4px); transform: scale(1.02); }
+  to { opacity: 1; filter: blur(0px); transform: scale(1); }
+}
+
+/* Lightbox Animations */
+@keyframes lbFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lbScaleUp {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.lb-backdrop {
+  animation: lbFadeIn 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.lb-content {
+  animation: lbScaleUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
