@@ -1,5 +1,28 @@
 @custom-variant dark (&:is(.dark *));
 
+:root, :root[data-theme="dark"] {
+  --bg-1: #F3EEE3;      /* cream section */
+  --bg-2: #18140F;      /* near-black section */
+  --text: #18140F;      /* text on --bg-1 */
+  --text-on-2: #F3EEE3; /* text on --bg-2 */
+  --accent: #C17B54;    /* terracotta */
+}
+
+:root[data-theme="light"] {
+  --bg-1: #FBF2EF;      /* was #FAF7F1 — shifted warmer/pinker to sit better with the blush */
+  --bg-2: #E8D2CE;      /* unchanged */
+  --text: #2A1815;      /* was #221D16 — deepened toward wine rather than yellow-brown */
+  --text-on-2: #2A1815; /* same as --text */
+  --accent: #A34B34;    /* was #C17B54 (terracotta) — deepened to rust so it has enough value contrast against the blush to actually pop */
+}
+
+body, section, nav, div {
+  transition-property: background-color, color, border-color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
+
+
 :root {
   --font-size: 16px;
   --background: #F4F0EA;

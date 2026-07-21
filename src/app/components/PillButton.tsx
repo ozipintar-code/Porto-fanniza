@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { CREAM, DARK, ACCENT, BODY } from "../theme";
+import { rgba, CREAM, DARK, ACCENT, BODY } from "../theme";
 
 interface PillButtonProps {
   children: React.ReactNode;
@@ -22,7 +22,7 @@ export default function PillButton({ children, dark = false, accentDot = false, 
       style={{
         display: "inline-flex", alignItems: "center", gap: "0.6rem",
         backgroundColor: bg, color: fg,
-        border: `1px solid ${dark ? "rgba(244,240,234,0.25)" : "rgba(17,17,17,0.18)"}`,
+        border: `1px solid ${dark ? "rgba(CREAM, 0.25)" : "rgba(DARK, 0.18)"}`,
         borderRadius: "99px",
         padding: accentDot ? "0.55rem 1.4rem 0.55rem 0.55rem" : "0.65rem 1.5rem",
         fontFamily: BODY, fontSize: "0.82rem", fontWeight: 500,

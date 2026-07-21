@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ArrowUpRight, X } from "lucide-react";
-import { CREAM, DARK, DARK2, ACCENT, DISPLAY, BODY, fitTitleSize } from "./theme";
+import { CREAM, DARK, DARK2, ACCENT, TEXT_ON_2, DISPLAY, BODY, fitTitleSize } from "./theme";
 import { PROJECTS, CATEGORIES, YEARS, type Category } from "./data/projects";
 import { useLanguage } from "./i18n";
 import { STRINGS } from "./strings";
@@ -47,7 +47,7 @@ function ArchiveCard({ slug, name, categoryLabel, year, cardImage, onClick, view
       />
       <div style={{
         position: "absolute", inset: 0,
-        backgroundColor: hov ? "rgba(17,17,17,0.55)" : "rgba(17,17,17,0.22)",
+        backgroundColor: hov ? "color-mix(in srgb, var(--text) 55%, transparent)" : "color-mix(in srgb, var(--text) 22%, transparent)",
         transition: "background-color 0.3s",
       }} />
 
@@ -74,13 +74,13 @@ function ArchiveCard({ slug, name, categoryLabel, year, cardImage, onClick, view
 
       {/* Card info */}
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.75rem" }}>
-        <p style={{ fontFamily: BODY, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: CREAM, opacity: 0.6, margin: "0 0 0.5rem" }}>
+        <p style={{ fontFamily: BODY, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: TEXT_ON_2, opacity: 0.6, margin: "0 0 0.5rem" }}>
           {categoryLabel} &middot; {year}
         </p>
         <h3 style={{
           fontFamily: DISPLAY, fontWeight: 900, textTransform: "uppercase",
           fontSize: fitTitleSize(name, 2.4, 2.4, 1.15), lineHeight: 0.95,
-          color: CREAM, margin: 0,
+          color: TEXT_ON_2, margin: 0,
         }}>
           {name}
         </h3>
@@ -147,7 +147,7 @@ export default function ProjectsPage({
       <section style={{ backgroundColor: CREAM, padding: "3.5rem 3rem 3rem" }}>
         <div style={{
           display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "flex-end",
-          borderBottom: "1px solid rgba(17,17,17,0.1)", paddingBottom: "2rem",
+          borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)", paddingBottom: "2rem",
         }}>
           <h1 style={{
             fontFamily: DISPLAY, fontWeight: 900, textTransform: "uppercase",
@@ -175,7 +175,7 @@ export default function ProjectsPage({
       ══════════════════════════════════════════ */}
       <section style={{
         backgroundColor: CREAM, padding: "1.25rem 3rem",
-        borderTop: "1px solid rgba(17,17,17,0.1)", borderBottom: "1px solid rgba(17,17,17,0.1)",
+        borderTop: "1px solid color-mix(in srgb, var(--text) 10%, transparent)", borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)",
         position: "sticky", top: "68px", zIndex: 40,
       }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
@@ -218,7 +218,7 @@ export default function ProjectsPage({
         {filtered.length === 0 ? (
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "center", padding: "8rem 0",
-            fontFamily: BODY, fontSize: "0.8rem", letterSpacing: "0.14em", textTransform: "uppercase", color: CREAM, opacity: 0.25,
+            fontFamily: BODY, fontSize: "0.8rem", letterSpacing: "0.14em", textTransform: "uppercase", color: TEXT_ON_2, opacity: 0.25,
           }}>
             {t.noProjectsFound}
           </div>
@@ -291,7 +291,7 @@ export default function ProjectsPage({
     {isPopupOpen && (
       <div style={{
         position: "fixed", inset: 0, zIndex: 999,
-        backgroundColor: "rgba(17,17,17,0.85)", backdropFilter: "blur(4px)",
+        backgroundColor: "color-mix(in srgb, var(--text) 85%, transparent)", backdropFilter: "blur(4px)",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: "1rem"
       }}>
@@ -303,7 +303,7 @@ export default function ProjectsPage({
           {/* Header */}
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "space-between",
-            padding: "1.5rem 2rem", borderBottom: "1px solid rgba(17,17,17,0.1)"
+            padding: "1.5rem 2rem", borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)"
           }}>
             <h2 style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: "1.4rem", margin: 0, color: DARK }}>
               {t.title}
@@ -311,11 +311,11 @@ export default function ProjectsPage({
             <button
               onClick={() => setPopupOpen(false)}
               style={{
-                background: "none", border: "1px solid rgba(17,17,17,0.2)", borderRadius: "50%",
+                background: "none", border: "1px solid color-mix(in srgb, var(--text) 20%, transparent)", borderRadius: "50%",
                 width: "36px", height: "36px", display: "flex", alignItems: "center", justifyContent: "center",
                 color: DARK, cursor: "pointer", transition: "background-color 0.2s"
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(17,17,17,0.05)")}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--text) 5%, transparent)")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
             >
               <X size={16} />
@@ -333,7 +333,7 @@ export default function ProjectsPage({
                 }}
                 style={{
                   display: "flex", alignItems: "center", gap: "1.25rem",
-                  padding: "1.25rem 0", borderBottom: "1px solid rgba(17,17,17,0.08)",
+                  padding: "1.25rem 0", borderBottom: "1px solid color-mix(in srgb, var(--text) 8%, transparent)",
                   cursor: "pointer",
                 }}
                 onMouseEnter={(e) => {

@@ -1,5 +1,5 @@
 import { Download, ArrowUpRight } from "lucide-react";
-import { CREAM, DARK, DARK2, ACCENT, DISPLAY, BODY, fitTitleSize } from "./theme";
+import { CREAM, DARK, DARK2, ACCENT, TEXT_ON_2, DISPLAY, BODY, fitTitleSize } from "./theme";
 import { useLanguage } from "./i18n";
 import { STRINGS } from "./strings";
 import SiteNav from "./components/SiteNav";
@@ -26,7 +26,7 @@ function SkillGroup({ title, items }: { title: string; items: string[] }) {
         {items.map((it) => (
           <span key={it} style={{
             fontFamily: BODY, fontSize: "0.8rem", padding: "0.45rem 0.9rem",
-            border: "1px solid rgba(17,17,17,0.14)", borderRadius: "99px", opacity: 0.75,
+            border: "1px solid color-mix(in srgb, var(--text) 14%, transparent)", borderRadius: "99px", opacity: 0.75,
           }}>
             {it}
           </span>
@@ -90,7 +90,7 @@ export default function AboutPage({
         </div>
         <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", justifySelf: "end", width: "100%" }}>
           <img
-            src="/images/portrait-fannisa.jpg"
+            src="/images/portrait-fannisa.jpeg"
             alt="Fannisa Azzuri Rienhardt"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", backgroundColor: "#d5d0c8" }}
           />
@@ -100,7 +100,7 @@ export default function AboutPage({
       {/* ══════════════════════════════════════════
           §2 · INTRO / BIO
       ══════════════════════════════════════════ */}
-      <section style={{ backgroundColor: DARK, color: CREAM, padding: "4.5rem 3rem" }}>
+      <section style={{ backgroundColor: DARK2, color: TEXT_ON_2, padding: "4.5rem 3rem" }}>
         <div className="ap-label-grid">
           <p style={{ fontFamily: BODY, fontSize: "0.62rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.35, margin: 0 }}>
             {t.introTitle}
@@ -114,7 +114,7 @@ export default function AboutPage({
       {/* ══════════════════════════════════════════
           §3 · SKILLS & TOOLS
       ══════════════════════════════════════════ */}
-      <section style={{ backgroundColor: CREAM, padding: "4.5rem 3rem", borderBottom: "1px solid rgba(17,17,17,0.1)" }}>
+      <section style={{ backgroundColor: CREAM, padding: "4.5rem 3rem", borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)" }}>
         <p style={{ fontFamily: DISPLAY, fontWeight: 900, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", letterSpacing: "-0.01em", margin: "0 0 2.5rem" }}>
           {t.skillsTitle}
         </p>
@@ -129,7 +129,7 @@ export default function AboutPage({
       {/* ══════════════════════════════════════════
           §4 · EDUCATION
       ══════════════════════════════════════════ */}
-      <section style={{ backgroundColor: CREAM, padding: "3.5rem 3rem", borderBottom: "1px solid rgba(17,17,17,0.1)" }}>
+      <section style={{ backgroundColor: CREAM, padding: "3.5rem 3rem", borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)" }}>
         <div className="ap-label-grid" style={{ alignItems: "baseline" }}>
           <p style={{ fontFamily: BODY, fontSize: "0.62rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.35, margin: 0 }}>
             {t.educationTitle}
@@ -146,15 +146,15 @@ export default function AboutPage({
       {/* ══════════════════════════════════════════
           §5 · PROFESSIONAL EXPERIENCE
       ══════════════════════════════════════════ */}
-      <section style={{ backgroundColor: DARK2, color: CREAM, padding: "4.5rem 3rem" }}>
+      <section style={{ backgroundColor: DARK2, color: TEXT_ON_2, padding: "4.5rem 3rem" }}>
         <p style={{ fontFamily: DISPLAY, fontWeight: 900, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", letterSpacing: "-0.01em", margin: "0 0 2.5rem" }}>
           {t.experienceTitle}
         </p>
         <div>
           {t.experiences.map((exp, i) => (
             <div key={i} className="ap-exp-row" style={{
-              padding: "1.6rem 0", borderTop: i === 0 ? "1px solid rgba(244,240,234,0.12)" : undefined,
-              borderBottom: "1px solid rgba(244,240,234,0.12)",
+              padding: "1.6rem 0", borderTop: i === 0 ? "1px solid color-mix(in srgb, var(--text-on-2) 12%, transparent)" : undefined,
+              borderBottom: "1px solid color-mix(in srgb, var(--text-on-2) 12%, transparent)",
             }}>
               <span style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: "1.1rem", opacity: 0.4 }}>{exp.year}</span>
               <div>
@@ -165,7 +165,7 @@ export default function AboutPage({
               </div>
               <span style={{
                 fontFamily: BODY, fontSize: "0.68rem", letterSpacing: "0.1em", textTransform: "uppercase",
-                opacity: 0.4, justifySelf: "start", border: "1px solid rgba(244,240,234,0.2)",
+                opacity: 0.4, justifySelf: "start", border: "1px solid color-mix(in srgb, var(--text-on-2) 20%, transparent)",
                 borderRadius: "99px", padding: "0.3rem 0.8rem", height: "fit-content",
               }}>
                 {exp.role}
@@ -178,7 +178,7 @@ export default function AboutPage({
       {/* ══════════════════════════════════════════
           §6 · ACADEMIC EXPERIENCE
       ══════════════════════════════════════════ */}
-      <section style={{ backgroundColor: CREAM, padding: "4rem 3rem", borderBottom: "1px solid rgba(17,17,17,0.1)" }}>
+      <section style={{ backgroundColor: CREAM, padding: "4rem 3rem", borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)" }}>
         <p style={{ fontFamily: DISPLAY, fontWeight: 900, fontSize: "clamp(1.6rem, 3vw, 2.2rem)", letterSpacing: "-0.01em", margin: "0 0 2rem" }}>
           {t.academicTitle}
         </p>
@@ -199,16 +199,16 @@ export default function AboutPage({
       {/* ══════════════════════════════════════════
           §7 · AWARDS & ACHIEVEMENTS
       ══════════════════════════════════════════ */}
-      <section style={{ backgroundColor: DARK, color: CREAM, padding: "4.5rem 3rem" }}>
+      <section style={{ backgroundColor: DARK2, color: TEXT_ON_2, padding: "4.5rem 3rem" }}>
         <p style={{ fontFamily: DISPLAY, fontWeight: 900, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", letterSpacing: "-0.01em", margin: "0 0 2.5rem" }}>
           {t.awardsTitle}
         </p>
         <div className="ap-auto-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "2rem" }}>
           {t.awards.map((a, i) => (
-            <div key={i} style={{ border: "1px solid rgba(244,240,234,0.15)", padding: "2rem" }}>
+            <div key={i} style={{ border: "1px solid color-mix(in srgb, var(--text-on-2) 15%, transparent)", padding: "2rem" }}>
               <span style={{
                 display: "inline-block", fontFamily: BODY, fontSize: "0.68rem", letterSpacing: "0.1em",
-                textTransform: "uppercase", opacity: 0.4, border: "1px solid rgba(244,240,234,0.2)",
+                textTransform: "uppercase", opacity: 0.4, border: "1px solid color-mix(in srgb, var(--text-on-2) 20%, transparent)",
                 borderRadius: "99px", padding: "0.3rem 0.8rem", marginBottom: "1.1rem",
               }}>
                 {a.year}
@@ -244,7 +244,7 @@ export default function AboutPage({
             onClick={onContactClick}
             style={{
               display: "inline-flex", alignItems: "center", gap: "0.6rem",
-              backgroundColor: DARK, color: CREAM, textDecoration: "none", border: "none", cursor: "pointer",
+              backgroundColor: DARK2, color: TEXT_ON_2, textDecoration: "none", border: "none", cursor: "pointer",
               borderRadius: "99px", padding: "0.65rem 1.4rem",
               fontFamily: BODY, fontSize: "0.85rem", fontWeight: 500, letterSpacing: "0.03em",
             }}

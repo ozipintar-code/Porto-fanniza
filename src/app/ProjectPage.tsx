@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, X, ArrowLeft } from "lucide-react";
-import { CREAM, DARK, DARK2, ACCENT, DISPLAY, BODY, fitTitleSize } from "./theme";
+import { CREAM, DARK, DARK2, ACCENT, TEXT_ON_2, DISPLAY, BODY, fitTitleSize } from "./theme";
 import { localize, type Project } from "./data/projects";
 import { useLanguage } from "./i18n";
 import { STRINGS } from "./strings";
@@ -33,14 +33,14 @@ function GalleryImage({
       {hov && (
         <div style={{
           position: "absolute", inset: 0,
-          backgroundColor: "rgba(17,17,17,0.18)",
+          backgroundColor: "color-mix(in srgb, var(--text) 18%, transparent)",
           display: "flex", alignItems: "center", justifyContent: "center",
           transition: "opacity 0.25s",
         }}>
           <span style={{
             fontFamily: BODY, fontSize: "0.7rem", letterSpacing: "0.15em",
             textTransform: "uppercase", color: CREAM,
-            backgroundColor: "rgba(17,17,17,0.55)", padding: "0.4rem 0.9rem",
+            backgroundColor: "color-mix(in srgb, var(--text) 55%, transparent)", padding: "0.4rem 0.9rem",
           }}>
             {expandLabel}
           </span>
@@ -52,7 +52,7 @@ function GalleryImage({
 
 function SpecRow({ label, value }: { label: string; value: string }) {
   return (
-    <tr style={{ borderBottom: "1px solid rgba(17,17,17,0.08)" }}>
+    <tr style={{ borderBottom: "1px solid color-mix(in srgb, var(--text) 8%, transparent)" }}>
       <td style={{
         fontFamily: BODY, fontSize: "0.68rem", letterSpacing: "0.12em",
         textTransform: "uppercase", opacity: 0.35,
@@ -157,7 +157,7 @@ export default function ProjectPage({
           .pp-meta-bar { flex-wrap: wrap !important; }
           .pp-meta-cell { flex: 0 0 50% !important; box-sizing: border-box; }
           .pp-meta-cell:nth-child(2n) { border-right: none !important; }
-          .pp-meta-cell:nth-child(-n+2) { border-bottom: 1px solid rgba(17,17,17,0.1); }
+          .pp-meta-cell:nth-child(-n+2) { border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent); }
           .pp-two-col { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
           .pp-next-row { flex-direction: column !important; align-items: flex-start !important; }
           .pp-next-row > *:last-child { width: 100%; justify-content: space-between; }
@@ -175,7 +175,7 @@ export default function ProjectPage({
           onClick={() => setLightbox(null)}
           style={{
             position: "fixed", inset: 0, zIndex: 200,
-            backgroundColor: "rgba(17,17,17,0.97)",
+            backgroundColor: "color-mix(in srgb, var(--text) 97%, transparent)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}
         >
@@ -184,7 +184,7 @@ export default function ProjectPage({
             style={{
               position: "absolute", top: "1.5rem", right: "1.5rem",
               background: "none",
-              border: "1px solid rgba(244,240,234,0.2)", borderRadius: "50%",
+              border: "1px solid color-mix(in srgb, var(--bg-1) 20%, transparent)", borderRadius: "50%",
               width: "42px", height: "42px",
               display: "flex", alignItems: "center", justifyContent: "center",
               color: CREAM, cursor: "pointer", zIndex: 10,
@@ -203,7 +203,7 @@ export default function ProjectPage({
 
           <button onClick={lbPrev} style={{
             position: "absolute", left: "2rem",
-            background: "none", border: "1px solid rgba(244,240,234,0.2)", borderRadius: "50%",
+            background: "none", border: "1px solid color-mix(in srgb, var(--bg-1) 20%, transparent)", borderRadius: "50%",
             width: "46px", height: "46px",
             display: "flex", alignItems: "center", justifyContent: "center",
             color: CREAM, cursor: "pointer",
@@ -219,7 +219,7 @@ export default function ProjectPage({
 
           <button onClick={lbNext} style={{
             position: "absolute", right: "2rem",
-            background: "none", border: "1px solid rgba(244,240,234,0.2)", borderRadius: "50%",
+            background: "none", border: "1px solid color-mix(in srgb, var(--bg-1) 20%, transparent)", borderRadius: "50%",
             width: "46px", height: "46px",
             display: "flex", alignItems: "center", justifyContent: "center",
             color: CREAM, cursor: "pointer",
@@ -273,7 +273,7 @@ export default function ProjectPage({
         <div className="pp-meta-bar" style={{
           display: "flex", gap: "0", alignItems: "stretch",
           margin: "1.5rem 2.5rem",
-          border: "1px solid rgba(17,17,17,0.1)",
+          border: "1px solid color-mix(in srgb, var(--text) 10%, transparent)",
         }}>
           {[
             { label: t.category, value: catLabel[project.category] },
@@ -283,7 +283,7 @@ export default function ProjectPage({
           ].map((m, i, arr) => (
             <div key={m.label} className="pp-meta-cell" style={{
               flex: 1, padding: "1.25rem 1.5rem", minWidth: 0,
-              borderRight: i < arr.length - 1 ? "1px solid rgba(17,17,17,0.1)" : "none",
+              borderRight: i < arr.length - 1 ? "1px solid color-mix(in srgb, var(--text) 10%, transparent)" : "none",
             }}>
               <p style={{ fontFamily: BODY, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.32, margin: "0 0 0.4rem" }}>
                 {m.label}
@@ -314,7 +314,7 @@ export default function ProjectPage({
             />
             <div style={{
               position: "absolute", bottom: 0, left: 0, right: 0,
-              background: "linear-gradient(to top, rgba(17,17,17,0.45) 0%, transparent 100%)",
+              background: "linear-gradient(to top, color-mix(in srgb, var(--text) 45%, transparent) 0%, transparent 100%)",
               padding: "3rem 2rem 1.5rem",
               display: "flex", flexWrap: "wrap", gap: "0.5rem 1.5rem", justifyContent: "space-between", alignItems: "flex-end",
             }}>
@@ -360,8 +360,8 @@ export default function ProjectPage({
 
         {/* Pull quote */}
         <div style={{
-          borderTop: "1px solid rgba(17,17,17,0.1)",
-          borderBottom: "1px solid rgba(17,17,17,0.1)",
+          borderTop: "1px solid color-mix(in srgb, var(--text) 10%, transparent)",
+          borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)",
           padding: "4rem 0",
           textAlign: "center",
         }}>
@@ -386,7 +386,7 @@ export default function ProjectPage({
       {/* ────────────────────────────────────────
           §4 · GALLERY
       ──────────────────────────────────────── */}
-      <section style={{ backgroundColor: DARK2, padding: "5rem 3rem", color: CREAM }}>
+      <section style={{ backgroundColor: DARK2, padding: "5rem 3rem", color: TEXT_ON_2 }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem 1.5rem", justifyContent: "space-between", alignItems: "baseline", marginBottom: "2.5rem" }}>
           <p style={{ fontFamily: BODY, fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", opacity: 0.28, margin: 0 }}>
             {t.gallery}
@@ -456,7 +456,7 @@ export default function ProjectPage({
         onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#1c1c1c")}
         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = DARK)}
       >
-        <div style={{ height: "1px", backgroundColor: "rgba(244,240,234,0.08)" }} />
+        <div style={{ height: "1px", backgroundColor: "color-mix(in srgb, var(--bg-1) 8%, transparent)" }} />
 
         <div className="pp-next-row" style={{ padding: "3.5rem 3rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "2rem" }}>
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -484,12 +484,12 @@ export default function ProjectPage({
             />
             <div style={{
               width: "54px", height: "54px",
-              border: "1px solid rgba(244,240,234,0.2)", borderRadius: "50%",
+              border: "1px solid color-mix(in srgb, var(--bg-1) 20%, transparent)", borderRadius: "50%",
               display: "flex", alignItems: "center", justifyContent: "center",
               transition: "border-color 0.22s, background-color 0.22s",
             }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(244,240,234,0.6)"; e.currentTarget.style.backgroundColor = "rgba(244,240,234,0.08)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(244,240,234,0.2)"; e.currentTarget.style.backgroundColor = "transparent"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "color-mix(in srgb, var(--bg-1) 60%, transparent)"; e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--bg-1) 8%, transparent)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "color-mix(in srgb, var(--bg-1) 20%, transparent)"; e.currentTarget.style.backgroundColor = "transparent"; }}
             >
               <ArrowRight size={20} />
             </div>

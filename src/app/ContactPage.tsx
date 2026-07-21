@@ -49,13 +49,13 @@ export default function ContactPage(props: ContactPageProps) {
             download
             style={{
               display: "inline-flex", alignItems: "center", gap: "0.6rem",
-              border: `1px solid rgba(17,17,17,0.2)`, color: DARK, textDecoration: "none",
-              borderRadius: "99px", padding: "0.65rem 1.4rem",
-              fontFamily: BODY, fontSize: "0.85rem", fontWeight: 500, letterSpacing: "0.03em",
-              transition: "background-color 0.2s, border-color 0.2s"
+              border: `1px solid color-mix(in srgb, ${DARK} 20%, transparent)`, color: DARK, textDecoration: "none",
+              borderRadius: "99px", padding: "0.4rem 1.25rem",
+              fontFamily: BODY, fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.05em",
+              cursor: "pointer", transition: "background-color 0.3s, border-color 0.3s"
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(17,17,17,0.04)"; e.currentTarget.style.borderColor = DARK; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.borderColor = "rgba(17,17,17,0.2)"; }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = `color-mix(in srgb, ${DARK} 4%, transparent)`; e.currentTarget.style.borderColor = DARK; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.borderColor = `color-mix(in srgb, ${DARK} 20%, transparent)`; }}
           >
             <Download size={15} /> Unduh CV (PDF)
           </a>

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Menu, X, Droplet, Moon } from "lucide-react";
 import { CREAM, DARK, ACCENT, DISPLAY, BODY } from "../theme";
 import { useLanguage } from "../i18n";
 import { STRINGS } from "../strings";
+import { useTheme } from "./ThemeContext";
 
 interface SiteNavProps {
   onLogoClick: () => void;
@@ -27,6 +28,37 @@ interface SiteNavProps {
 // the rest of the app.
 const BREAKPOINT = 900;
 
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  const isLight = theme === "light";
+  
+  return (
+    <button
+      onClick={toggleTheme}
+      style={{
+        display: "flex", alignItems: "center", gap: "0.6rem",
+        backgroundColor: isLight ? "#E4E1DA" : "var(--bg-2)",
+        border: `1.5px solid ${isLight ? "#1A1A1A" : "var(--accent)"}`,
+        borderRadius: "999px",
+        padding: "0.4rem 1rem 0.4rem 0.4rem",
+        cursor: "pointer",
+        fontFamily: BODY, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.05em",
+        color: isLight ? "#1A1A1A" : "var(--bg-1)",
+        transition: "all 0.2s"
+      }}
+    >
+      <div style={{
+        backgroundColor: isLight ? "#F1F0EC" : "transparent",
+        borderRadius: "50%", padding: "0.3rem",
+        display: "flex", alignItems: "center", justifyContent: "center"
+      }}>
+        {isLight ? <Droplet size={14} color="#1A1A1A" /> : <Moon size={14} color="var(--bg-1)" />}
+      </div>
+      {isLight ? "BLUSH" : "NOIR"}
+    </button>
+  );
+}
+
 function LanguageToggle({ dark }: { dark?: boolean }) {
   const { lang, setLang } = useLanguage();
   const color = dark ? CREAM : DARK;
@@ -36,7 +68,7 @@ function LanguageToggle({ dark }: { dark?: boolean }) {
       aria-label="Language"
       style={{
         display: "flex", alignItems: "center", flexShrink: 0,
-        border: `1px solid ${dark ? "rgba(244,240,234,0.25)" : "rgba(17,17,17,0.15)"}`,
+        border: `1px solid color-mix(in srgb, ${dark ? CREAM : DARK} ${dark ? '25%' : '15%'}, transparent)`,
         borderRadius: "99px", padding: "0.2rem",
       }}
     >
@@ -123,6 +155,8 @@ export default function SiteNav({
         top: 0,
         zIndex: 60,
         backgroundColor: CREAM,
+        transform: sticky ? "translateZ(0)" : "none",
+        willChange: sticky ? "transform" : "auto",
       }}
     >
       <style>{`
@@ -144,9 +178,9 @@ export default function SiteNav({
           justifyContent: "space-between",
           alignItems: "center",
           padding: "1.4rem 1.5rem",
-          borderBottom: scrolled ? "1px solid rgba(17,17,17,0.12)" : "1px solid rgba(17,17,17,0.08)",
+          borderBottom: scrolled ? "1px solid color-mix(in srgb, var(--text) 12%, transparent)" : "1px solid color-mix(in srgb, var(--text) 8%, transparent)",
           ...(sticky
-            ? { transition: "border-color 0.25s, box-shadow 0.25s", boxShadow: scrolled ? "0 2px 20px rgba(17,17,17,0.06)" : "none" }
+            ? { transition: "border-color 0.25s, box-shadow 0.25s", boxShadow: scrolled ? "0 2px 20px color-mix(in srgb, var(--text) 6%, transparent)" : "none" }
             : {}),
         }}
       >
@@ -181,6 +215,7 @@ export default function SiteNav({
               {n.label}
             </a>
           ))}
+          <ThemeToggle />
           <LanguageToggle />
         </div>
 
@@ -198,7 +233,7 @@ export default function SiteNav({
               alignItems: "center", justifyContent: "center",
               width: "38px", height: "38px", borderRadius: "50%",
               backgroundColor: menuOpen ? DARK : "transparent",
-              border: "1px solid rgba(17,17,17,0.15)",
+              border: "1px solid color-mix(in srgb, var(--text) 15%, transparent)",
               color: menuOpen ? CREAM : DARK,
               cursor: "pointer", flexShrink: 0,
             }}
@@ -229,13 +264,14 @@ export default function SiteNav({
             style={{
               fontFamily: DISPLAY, fontWeight: 700, fontSize: "1.5rem", textTransform: "uppercase",
               textDecoration: "none", color: CREAM, opacity: 0.85,
-              padding: "0.85rem 0", borderBottom: "1px solid rgba(244,240,234,0.12)",
+              padding: "0.85rem 0", borderBottom: "1px solid color-mix(in srgb, var(--bg-1) 12%, transparent)",
             }}
           >
             {n.label}
           </a>
         ))}
-        <div style={{ marginTop: "1.25rem" }}>
+        <div style={{ marginTop: "1.25rem", display: "flex", gap: "1rem" }}>
+          <ThemeToggle />
           <LanguageToggle dark />
         </div>
       </div>

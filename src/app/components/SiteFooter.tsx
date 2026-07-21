@@ -34,7 +34,7 @@ export default function SiteFooter({ onProjectsClick, onAboutClick, onContactCli
         }
       `}</style>
       {/* Footer body */}
-      <div className="sf-grid" style={{ borderBottom: "1px solid rgba(244,240,234,0.08)" }}>
+      <div className="sf-grid" style={{ borderBottom: "1px solid color-mix(in srgb, var(--bg-1) 8%, transparent)" }}>
         {/* Brand column */}
         <div>
           <p style={{ fontFamily: DISPLAY, fontWeight: 900, fontSize: "1.15rem", letterSpacing: "0.18em", marginBottom: "1.1rem" }}>
@@ -101,7 +101,7 @@ export default function SiteFooter({ onProjectsClick, onAboutClick, onContactCli
           fontSize: "clamp(3rem, 22.5vw, 99rem)",
           lineHeight: 0.82, letterSpacing: "-0.01em",
           margin: 0, padding: "0 2.5rem",
-          color: "rgba(244,240,234,0.055)",
+          color: "color-mix(in srgb, var(--bg-1) 5.5%, transparent)",
           whiteSpace: "nowrap", userSelect: "none",
         }}>
           REINHART
@@ -112,7 +112,7 @@ export default function SiteFooter({ onProjectsClick, onAboutClick, onContactCli
       <div style={{
         padding: "1rem 3rem 1.5rem",
         display: "flex", flexWrap: "wrap", gap: "0.4rem 1rem", justifyContent: "space-between", alignItems: "center",
-        borderTop: "1px solid rgba(244,240,234,0.05)",
+        borderTop: "1px solid color-mix(in srgb, var(--bg-1) 5%, transparent)",
       }}>
         <p style={{ fontFamily: BODY, fontSize: "0.62rem", opacity: 0.22, margin: 0 }}>
           © {new Date().getFullYear()} Deui.space · Fannisa Azzuri Rienhardt. {t.rights}

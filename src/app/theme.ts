@@ -3,10 +3,11 @@
 // "Bold Portfolio Website Design" — used by the Home, Projects Archive,
 // and Project Detail pages so the whole app stays visually consistent.
 
-export const CREAM = "#F4F0EA";
-export const DARK = "#111111";
-export const DARK2 = "#181818";
-export const ACCENT = "#C07A5A";
+export const CREAM = "var(--bg-1)";
+export const DARK = "var(--text)";
+export const DARK2 = "var(--bg-2)";
+export const ACCENT = "var(--accent)";
+export const TEXT_ON_2 = "var(--text-on-2)";
 
 export const DISPLAY = "'Big Shoulders Display', sans-serif";
 export const BODY = "'Outfit', sans-serif";

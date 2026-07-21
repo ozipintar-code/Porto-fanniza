@@ -1,4 +1,4 @@
-import { CREAM, DARK, BODY } from "../theme";
+import { rgba, CREAM, DARK, BODY } from "../theme";
 
 interface FilterPillProps {
   label: string;
@@ -15,12 +15,12 @@ export default function FilterPill({ label, active, onClick }: FilterPillProps) 
         padding: "0.5rem 1.25rem", borderRadius: "99px", cursor: "pointer",
         backgroundColor: active ? DARK : "transparent",
         color: active ? CREAM : DARK,
-        border: `1px solid ${active ? DARK : "rgba(17,17,17,0.22)"}`,
+        border: `1px solid ${active ? DARK : "rgba(DARK, 0.22)"}`,
         opacity: active ? 1 : 0.7,
         transition: "background-color 0.2s, color 0.2s, opacity 0.2s, border-color 0.2s",
       }}
       onMouseEnter={(e) => { if (!active) { e.currentTarget.style.opacity = "1"; e.currentTarget.style.borderColor = DARK; } }}
-      onMouseLeave={(e) => { if (!active) { e.currentTarget.style.opacity = "0.7"; e.currentTarget.style.borderColor = "rgba(17,17,17,0.22)"; } }}
+      onMouseLeave={(e) => { if (!active) { e.currentTarget.style.opacity = "0.7"; e.currentTarget.style.borderColor = "rgba(DARK, 0.22)"; } }}
     >
       {label}
     </button>
