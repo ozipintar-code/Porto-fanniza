@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, X, ArrowLeft } from "lucide-react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { CREAM, DARK, DARK2, ACCENT, TEXT_ON_2, DISPLAY, BODY, fitTitleSize } from "./theme";
 import { localize, type Project } from "./data/projects";
 import { useLanguage } from "./i18n";
@@ -15,21 +16,27 @@ function GalleryImage({
   src: string; alt: string; height: string; onExpand: () => void; expandLabel: string;
 }) {
   const [hov, setHov] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+
   return (
     <div
-      style={{ position: "relative", overflow: "hidden", cursor: "zoom-in" }}
+      ref={ref}
+      style={{ position: "relative", overflow: "hidden", cursor: "zoom-in", height }}
       onClick={onExpand}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
     >
-      <img
+      <motion.img
         src={src} alt={alt}
         style={{
-          width: "100%", height, objectFit: "cover", display: "block",
+          position: "absolute", top: "-12%", left: 0, width: "100%", height: "124%", objectFit: "cover", display: "block",
           backgroundColor: "#2a2a2a",
-          transform: hov ? "scale(1.025)" : "scale(1)",
-          transition: "transform 0.5s cubic-bezier(.25,.8,.25,1)",
+          y,
         }}
+        animate={{ scale: hov ? 1.025 : 1 }}
+        transition={{ duration: 0.5, ease: [0.25, 0.8, 0.25, 1] }}
       />
       {hov && (
         <div style={{
@@ -73,6 +80,17 @@ function SpecRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+function ScrubWord({ word, progress, index, total, isLast }: { word: string; progress: any; index: number; total: number; isLast: boolean }) {
+  const start = index / total;
+  const end = start + (1 / total);
+  const opacity = useTransform(progress, [start, end], [0.15, 1]);
+  return (
+    <motion.span style={{ opacity, display: "inline-block", marginRight: isLast ? 0 : "0.22em" }}>
+      {word}
+    </motion.span>
+  );
+}
+
 // ── Main export ───────────────────────────────────────────────────────────────
 interface ProjectPageProps {
   project: Project;
@@ -100,6 +118,28 @@ export default function ProjectPage({
 
   const gallery = project.gallery;
   const lightboxSrc = (i: number) => gallery[i].src;
+
+  // Hero Parallax
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start end", "end start"]
+  });
+  const heroY = useTransform(heroProgress, [0, 1], ["-15%", "15%"]);
+  const titleLeftX = useTransform(heroProgress, [0, 1], ["0vw", "-10vw"]);
+  const titleRightX = useTransform(heroProgress, [0, 1], ["0vw", "10vw"]);
+
+  const quoteRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: quoteProgress } = useScroll({ target: quoteRef, offset: ["start 85%", "center center"] });
+
+  const staggerContainer: Variants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } }
+  };
+  const slideUpItem: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
+  };
 
   // Reset scroll + lightbox whenever we navigate to a different project
   useEffect(() => {
@@ -152,7 +192,7 @@ export default function ProjectPage({
   return (
     <div
       id="page-scroll-root"
-      style={{ fontFamily: BODY, backgroundColor: CREAM, color: DARK, overflowX: "hidden", height: "100vh", overflowY: "auto" }}
+      style={{ fontFamily: BODY, backgroundColor: CREAM, color: DARK, overflowX: "hidden", minHeight: "100vh" }}
     >
       <SEO 
         title={`${project.name} — Fannisa Azzuri`}
@@ -276,7 +316,14 @@ export default function ProjectPage({
             margin: 0, color: DARK, textTransform: "uppercase",
             overflowWrap: "break-word",
           }}>
-            {project.name}
+            {project.name.split(" ").map((word, i, arr) => {
+              const x = arr.length > 1 && i < arr.length / 2 ? titleLeftX : (arr.length > 1 ? titleRightX : 0);
+              return (
+                <motion.span key={i} style={{ display: "inline-block", x, marginRight: i < arr.length - 1 ? "0.28em" : 0 }}>
+                  {word}
+                </motion.span>
+              );
+            })}
           </h1>
         </div>
 
@@ -308,20 +355,22 @@ export default function ProjectPage({
 
         {/* Full-bleed hero image */}
         <div
+          ref={heroRef}
           style={{ padding: "0 2.5rem 4.5rem", cursor: "zoom-in" }}
           onClick={() => setLightbox(project.heroImage)}
         >
           <div style={{ position: "relative", overflow: "hidden" }}>
-            <img
+            <motion.img
               src={project.heroImage}
               alt={`${project.name} — hero`}
               style={{
                 width: "100%", height: "68vh", objectFit: "cover",
                 display: "block", backgroundColor: "#ccc8c0",
-                transition: "transform 0.6s cubic-bezier(.25,.8,.25,1)",
+                y: heroY,
+                scale: 1.15
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.015)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              whileHover={{ scale: 1.18 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             />
             <div style={{
               position: "absolute", bottom: 0, left: 0, right: 0,
@@ -345,8 +394,8 @@ export default function ProjectPage({
           §3 · OVERVIEW
       ──────────────────────────────────────── */}
       <section style={{ backgroundColor: CREAM, padding: "1rem 3rem 5rem" }}>
-        <div className="pp-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", marginBottom: "4.5rem" }}>
-          <div>
+        <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} className="pp-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", marginBottom: "4.5rem" }}>
+          <motion.div variants={slideUpItem}>
             <p style={{ fontFamily: BODY, fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", opacity: 0.3, marginBottom: "1.5rem" }}>
               {t.theBrief}
             </p>
@@ -355,9 +404,9 @@ export default function ProjectPage({
                 {para}
               </p>
             ))}
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div variants={slideUpItem}>
             <p style={{ fontFamily: BODY, fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", opacity: 0.3, marginBottom: "1.5rem" }}>
               {t.theApproach}
             </p>
@@ -366,11 +415,11 @@ export default function ProjectPage({
                 {para}
               </p>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Pull quote */}
-        <div style={{
+        <div ref={quoteRef} style={{
           borderTop: "1px solid color-mix(in srgb, var(--text) 10%, transparent)",
           borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)",
           padding: "4rem 0",
@@ -382,7 +431,11 @@ export default function ProjectPage({
             lineHeight: 1.12, letterSpacing: "-0.025em",
             color: DARK, margin: "0 auto", maxWidth: "860px",
           }}>
-            <span style={{ color: ACCENT }}>&ldquo;{project.quote}&rdquo;</span>
+            <span style={{ color: ACCENT }}>&ldquo;</span>
+            {project.quote.split(" ").map((word, i, arr) => (
+              <ScrubWord key={i} word={word} progress={quoteProgress} index={i} total={arr.length} isLast={i === arr.length - 1} />
+            ))}
+            <span style={{ color: ACCENT }}>&rdquo;</span>
           </p>
           <p style={{
             fontFamily: BODY, fontSize: "0.65rem", letterSpacing: "0.18em",
@@ -456,14 +509,14 @@ export default function ProjectPage({
         <p style={{ fontFamily: BODY, fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", opacity: 0.3, marginBottom: "2.5rem" }}>
           {t.projectDetails}
         </p>
-        <div className="pp-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} className="pp-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem" }}>
+          <motion.table variants={slideUpItem} style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>{SPEC_LEFT.map((r) => <SpecRow key={r.label} label={r.label} value={r.value} />)}</tbody>
-          </table>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          </motion.table>
+          <motion.table variants={slideUpItem} style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>{SPEC_RIGHT.map((r) => <SpecRow key={r.label} label={r.label} value={r.value} />)}</tbody>
-          </table>
-        </div>
+          </motion.table>
+        </motion.div>
       </section>
 
 
@@ -485,8 +538,8 @@ export default function ProjectPage({
       >
         <div style={{ height: "1px", backgroundColor: "color-mix(in srgb, var(--bg-1) 8%, transparent)" }} />
 
-        <div className="pp-next-row" style={{ padding: "3.5rem 3rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "2rem" }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
+        <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} className="pp-next-row" style={{ padding: "3.5rem 3rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "2rem" }}>
+          <motion.div variants={slideUpItem} style={{ flex: 1, minWidth: 0 }}>
             <p style={{ fontFamily: BODY, fontSize: "0.58rem", letterSpacing: "0.25em", textTransform: "uppercase", opacity: 0.3, margin: "0 0 0.6rem" }}>
               {t.nextProject}
             </p>
@@ -501,9 +554,9 @@ export default function ProjectPage({
             <p style={{ fontFamily: BODY, fontSize: "0.78rem", opacity: 0.32, margin: 0, letterSpacing: "0.06em" }}>
               {catLabel[nextProject.category]} · {nextProject.location.split(",")[0]} · {nextProject.year}
             </p>
-          </div>
+          </motion.div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "1.75rem", flexShrink: 0 }}>
+          <motion.div variants={slideUpItem} style={{ display: "flex", alignItems: "center", gap: "1.75rem", flexShrink: 0 }}>
             <img
               src={nextProject.cardImage}
               alt={`${nextProject.name} — preview`}
@@ -520,8 +573,8 @@ export default function ProjectPage({
             >
               <ArrowRight size={20} />
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
 

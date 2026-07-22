@@ -95,16 +95,16 @@ export default function SiteFooter({ onProjectsClick, onAboutClick, onContactCli
       </div>
 
       {/* Oversized footer wordmark */}
-      <div style={{ overflow: "hidden", padding: "0", lineHeight: 1 }}>
+      <div style={{ overflow: "hidden", padding: "0", lineHeight: 1, textAlign: "center" }}>
         <p style={{
           fontFamily: DISPLAY, fontWeight: 900,
-          fontSize: "clamp(3rem, 22.5vw, 99rem)",
+          fontSize: "clamp(3rem, 13vw, 99rem)",
           lineHeight: 0.82, letterSpacing: "-0.01em",
           margin: 0, padding: "0 2.5rem",
           color: "color-mix(in srgb, var(--bg-1) 5.5%, transparent)",
           whiteSpace: "nowrap", userSelect: "none",
         }}>
-          REINHART
+          RIENHARDT
         </p>
       </div>
 

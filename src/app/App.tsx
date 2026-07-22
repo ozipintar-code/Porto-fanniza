@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import HomePage from "./HomePage";
 import ProjectsPage from "./ProjectsPage";
 import ProjectPage from "./ProjectPage";
@@ -7,6 +8,7 @@ import ContactPage from "./ContactPage";
 import { getNextProject, getProjectBySlug } from "./data/projects";
 import { useRouter } from "./router";
 import type { CategoryFilter } from "./ProjectsPage";
+import { DARK, CREAM } from "./theme";
 
 export default function App() {
   const { route, navigate } = useRouter();
@@ -28,57 +30,33 @@ export default function App() {
     onContactClick: goContact,
   };
 
+  let content;
   if (route.name === "about") {
-    return (
-      <AboutPage
-        onSelectProject={goProjectBySlug}
-        onViewAllProjects={() => goProjects()}
-        onLogoClick={goHome}
-        {...navProps}
-      />
-    );
+    content = <AboutPage onSelectProject={goProjectBySlug} onViewAllProjects={() => goProjects()} onLogoClick={goHome} {...navProps} />;
+  } else if (route.name === "contact") {
+    content = <ContactPage onProjectsClick={() => goProjects()} onLogoClick={goHome} {...navProps} />;
+  } else if (route.name === "projects") {
+    content = <ProjectsPage onSelectProject={goProjectBySlug} onLogoClick={goHome} initialFilter={route.filter} {...navProps} />;
+  } else if (route.name === "project") {
+    content = <ProjectPage project={route.project} nextProject={getNextProject(route.project.id)} onBack={goHome} onSelectProject={goProjectBySlug} onViewAllProjects={() => goProjects()} {...navProps} />;
+  } else {
+    content = <HomePage onSelectProject={goProjectBySlug} onViewAllProjects={() => goProjects()} {...navProps} />;
   }
 
-  if (route.name === "contact") {
-    return (
-      <ContactPage
-        onProjectsClick={() => goProjects()}
-        onLogoClick={goHome}
-        {...navProps}
-      />
-    );
-  }
-
-  if (route.name === "projects") {
-    return (
-      <ProjectsPage
-        onSelectProject={goProjectBySlug}
-        onLogoClick={goHome}
-        initialFilter={route.filter}
-        {...navProps}
-      />
-    );
-  }
-
-  if (route.name === "project") {
-    const project = route.project;
-    return (
-      <ProjectPage
-        project={project}
-        nextProject={getNextProject(project.id)}
-        onBack={goHome}
-        onSelectProject={goProjectBySlug}
-        onViewAllProjects={() => goProjects()}
-        {...navProps}
-      />
-    );
-  }
+  const pageKey = route.name === "project" ? `project-${route.project.id}` : route.name;
 
   return (
-    <HomePage
-      onSelectProject={goProjectBySlug}
-      onViewAllProjects={() => goProjects()}
-      {...navProps}
-    />
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={pageKey}
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -15 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        style={{ backgroundColor: CREAM, minHeight: "100vh" }}
+      >
+        {content}
+      </motion.div>
+    </AnimatePresence>
   );
 }

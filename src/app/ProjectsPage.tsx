@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight, X } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { CREAM, DARK, DARK2, ACCENT, TEXT_ON_2, DISPLAY, BODY, fitTitleSize } from "./theme";
 import { PROJECTS, CATEGORIES, YEARS, type Category } from "./data/projects";
 import { useLanguage } from "./i18n";
@@ -29,22 +30,28 @@ function ArchiveCard({ slug, name, categoryLabel, year, cardImage, onClick, view
   slug: string; name: string; categoryLabel: string; year: string; cardImage: string; onClick: (slug: string) => void; viewLabel: string;
 }) {
   const [hov, setHov] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: cardRef, offset: ["start end", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+
   return (
     <div
+      ref={cardRef}
       onClick={() => onClick(slug)}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", cursor: "pointer" }}
     >
-      <img
+      <motion.img
         src={cardImage}
         alt={name}
         style={{
-          width: "100%", height: "100%", objectFit: "cover", display: "block",
+          position: "absolute", top: "-12%", left: 0, width: "100%", height: "124%", objectFit: "cover", display: "block",
           backgroundColor: "#2a2a2a",
-          transform: hov ? "scale(1.045)" : "scale(1)",
-          transition: "transform 0.7s cubic-bezier(.25,.8,.25,1)",
+          y: imgY,
         }}
+        animate={{ scale: hov ? 1.045 : 1 }}
+        transition={{ duration: 0.7, ease: [0.25, 0.8, 0.25, 1] }}
       />
       <div style={{
         position: "absolute", inset: 0,
@@ -104,6 +111,10 @@ export default function ProjectsPage({
   const [activeYear, setActiveYear] = useState("All");
   const [isPopupOpen, setPopupOpen] = useState(false);
 
+  // Parallax Header
+  const { scrollY } = useScroll();
+  const titleY = useTransform(scrollY, [0, 500], [0, 180]);
+
   // Re-apply the requested filter whenever it changes — e.g. the visitor is
   // already on this page and clicks "Interior" or "Visual Merchandising"
   // again in the nav, which re-renders this component without remounting it.
@@ -151,13 +162,14 @@ export default function ProjectsPage({
           display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "flex-end",
           borderBottom: "1px solid color-mix(in srgb, var(--text) 10%, transparent)", paddingBottom: "2rem",
         }}>
-          <h1 style={{
+          <motion.h1 style={{
             fontFamily: DISPLAY, fontWeight: 900, textTransform: "uppercase",
             fontSize: "clamp(2.6rem, 9.5vw, 9rem)", lineHeight: 0.86, letterSpacing: "-0.03em",
             margin: 0, color: DARK,
+            y: titleY,
           }}>
             {t.title}
-          </h1>
+          </motion.h1>
           <div style={{ textAlign: "right" }}>
             <p style={{ fontFamily: BODY, fontSize: "0.62rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.3, margin: "0 0 0.4rem" }}>
               {t.total}
@@ -244,16 +256,27 @@ export default function ProjectsPage({
               }
             `}</style>
             
-            {filtered.map((p, index) => {
-              // Array of varying heights to simulate an organic masonry feel
-              const heights = ["62vh", "52vh", "56vh", "48vh", "65vh", "55vh"];
-              const h = heights[index % heights.length];
-              return (
-                <div key={p.id} className="masonry-item" style={{ height: h }}>
-                  <ArchiveCard slug={p.slug} name={p.name} categoryLabel={catLabel[p.category]} year={p.year} cardImage={p.cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
-                </div>
-              );
-            })}
+            <AnimatePresence mode="popLayout">
+              {filtered.map((p, index) => {
+                // Array of varying heights to simulate an organic masonry feel
+                const heights = ["62vh", "52vh", "56vh", "48vh", "65vh", "55vh"];
+                const h = heights[index % heights.length];
+                return (
+                  <motion.div 
+                    layout
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    key={p.id} 
+                    className="masonry-item" 
+                    style={{ height: h }}
+                  >
+                    <ArchiveCard slug={p.slug} name={p.name} categoryLabel={catLabel[p.category]} year={p.year} cardImage={p.cardImage} onClick={onSelectProject} viewLabel={viewLabel} />
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         )}
 
